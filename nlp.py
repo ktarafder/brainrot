@@ -1,11 +1,40 @@
 import spacy
 import emoji
+import numpy as np
 
-SLANG_WORDS = ["bruh", "yeet", "sus", "pog", "lmao", "tbh"]
-MEME_PHRASES = ["no cap", "on god", "big yikes", "say less"]
+BRAINROT = [
+    "skibidi", "gyatt", "rizz", "duke dennis", 
+    "sussy imposter",  "sigma", "alpha", "beta", "omega", "grindset", "gooning",
+    "copium", "cope", "seethe", "mald", "cringe", "based", "redpilled", "bluepilled", "blackpilled",
+    "omega male grindset", "andrew tate", "goon cave", 
+    "blud", "dawg", "ishowspeed", "kai cenat", "fanum tax", "bussing", "adin ross", 
+    "grimace shake", "amogus", "poggers", "glizzy", "thug shaker", 
+    "morbin time", "dj khaled", "sisyphus", "oceangate"
+    "nickeh30", "ratio", "uwu", "delulu", "mewing", "gta 6", 
+    "backrooms", "gigachad", "based", "kino", "no cap", "mrbeast", "ice spice",
+    "subway surfers"
+]
+
+MEME_PHRASES = [
+    "cap", "on god", "big yikes", "say less", "goofy ahh", "only in ohio", 
+    "the ocky way", "whopper whopper whopper whopper", "1 2 buckle my shoe", 
+    "sin city", "monday left me broken", "ayo the pizza here", 
+    "family guy funny moments compilation with subway surfers gameplay at the bottom", 
+    "F in the chat", "i love lean", "looksmaxxing", "better call saul", 
+    "i guess they never miss huh", "kid named finger", "no nut november", "bing chilling",
+    "sussy baka", "among us", "rizzing up baby gronk", "i like ya cut g", "i am a surgeon",
+    "chill guy", "brazil", "Ws in the chat", "metal pipe falling", "did you pray today",
+    "livvy dunne", "ugandan knuckles", "social credit", "foot fetish", "better caul saul",
+    "freddy fazbear", "literally hitting the griddy", "bro really thinks he's carti",
+    "a whole bunch of turbulence", "don pollo", "quandale dingle", "lightskin stare",
+    "john pork", "all my fellas", "colleen ballinger", "smurf cat vs strawberry elephant",
+    "fr we go gym", "goated with the sauce", "kevin james", "chill guy", "kiki do you love me", "hit or miss",
+    "zesty ahh", "rose toy", "having a great day"
+]
+
 
 def slang_density(doc):
-    slang_count = sum(1 for token in doc if token.text.lower() in SLANG_WORDS)
+    slang_count = sum(1 for token in doc if token.text.lower() in BRAINROT)
     return slang_count / len(doc) if len(doc) > 0 else 0
 
 def meme_density(text):
@@ -34,8 +63,8 @@ def brainrot_score(text):
 
 if __name__ == "__main__":
     # Test Texts
-    text1 = "Bruh, no cap, this is sus!!! 😂😂😂 Say less."
-    text2 = "This is a formal sentence. It is structured and coherent no cap."
+    text1 = "This is a normal sentence on god. I love to see it. I guess they never miss huh. 1 2 buckle my shoe. Skibidi bop bop bop. "
+    text2 = "Skibidi bop bop bop, gyatt, the rizz levels in Ohio are off the  charts, and somewhere Duke Dennis is asking, “Did you pray  today?” Meanwhile, Livvy Dunne is out here rizzing up Baby  Gronk with that sussy imposter energy—pibby glitching reality "
 
     # Calculate scores
     score1 = brainrot_score(text1)
