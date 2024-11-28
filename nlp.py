@@ -12,7 +12,7 @@ BRAINROT = [
     "morbin time", "dj khaled", "sisyphus", "oceangate"
     "nickeh30", "ratio", "uwu", "delulu", "mewing", "gta 6", 
     "backrooms", "gigachad", "based", "kino", "no cap", "mrbeast", "ice spice",
-    "subway surfers"
+    "subway surfers", "crashing out", "huzz", "chuzz", "kitten"
 ]
 
 MEME_PHRASES = [
@@ -32,6 +32,39 @@ MEME_PHRASES = [
     "zesty ahh", "rose toy", "having a great day"
 ]
 
+EMOJI_WEIGHTS = {
+    "🍆": 2.0,
+    "👅": 2.0,
+    "🍑": 2.0,
+    "🥵": 1.7,
+    "😈": 1.5,
+    "🤬": 1.4,
+    "😍": 1.4,
+    "👺": 1.4,
+    "🤷‍♀️": 1.0,
+    "❌": 1.2,
+    "🚫": 1.2,
+    "🥵": 1.5,
+    "🧏‍♂": 1.9,
+    "💅": 1.9,
+    "🚽": 1.7,
+    "🤡": 1.7,
+    "‼️": 1.5,
+    "🤖": 1.3,
+    "🤯": 1.7,
+    "🤠": 1.5,
+    "🤑": 1.2,
+    "🤫": 1.5,
+    "🤥": 1.3,
+    "🤧": 1.3,
+    "🥺": 1.5,
+    "😎": 1.2,
+    "😜": 1.4,
+    "🤪": 1.7,
+    "👼": 1.1,
+    "💀": 1.5,
+    "👑": 1.1,
+}
 
 def slang_density(doc):
     slang_count = sum(1 for token in doc if token.text.lower() in BRAINROT)
@@ -40,8 +73,8 @@ def slang_density(doc):
 def meme_density(text):
     return sum(1 for phrase in MEME_PHRASES if phrase in text.lower())
 
-def count_emojis(text):
-    return sum(1 for char in text if char in emoji.EMOJI_DATA)
+def enhanced_emoji_score(text):
+    return sum(EMOJI_WEIGHTS.get(char, 1) for char in text if char in emoji.EMOJI_DATA)
 
 def sentence_chaos(doc):
     sentence_lengths = [len(sentence.text.split()) for sentence in doc.sents]
@@ -53,7 +86,7 @@ def brainrot_score(text):
     
     # Calculate metrics
     slang_score = slang_density(doc)
-    emoji_score = count_emojis(text) / len(doc) if len(doc) > 0 else 0
+    emoji_score = enhanced_emoji_score(text) / len(doc) if len(doc) > 0 else 0
     meme_score = meme_density(text) / len(list(doc.sents)) if len(list(doc.sents)) > 0 else 0
     chaos_score = sentence_chaos(doc)
     
@@ -63,8 +96,8 @@ def brainrot_score(text):
 
 if __name__ == "__main__":
     # Test Texts
-    text1 = "This is a normal sentence on god. I love to see it. I guess they never miss huh. 1 2 buckle my shoe. Skibidi bop bop bop. "
-    text2 = "Skibidi bop bop bop, gyatt, the rizz levels in Ohio are off the  charts, and somewhere Duke Dennis is asking, “Did you pray  today?” Meanwhile, Livvy Dunne is out here rizzing up Baby  Gronk with that sussy imposter energy—pibby glitching reality "
+    text1 = "This is a normal sentence on god. I love to see it. I guess they never miss huh. 1 2 buckle my shoe. Skibidi bop bop bop🍆"
+    text2 = "Skibidi bop bop bop, gyatt, the rizz levels in Ohio are off the  charts, and somewhere Duke Dennis is asking, “Did you pray today?” Meanwhile, Livvy Dunne is out here rizzing up Baby  Gronk with that sussy imposter energy—pibby glitching reality "
 
     # Calculate scores
     score1 = brainrot_score(text1)
