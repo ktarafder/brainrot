@@ -6,6 +6,6 @@ def parse_word(file_path):
     text = ""
     for i, paragraph in enumerate(document.paragraphs):
         text += paragraph.text + "\n\n"
-    print(text)
+    return text
 
-parse_word("Tests/Files/brainrot.docx")
+print(parse_word("Tests/Files/brainrot.docx"))
