@@ -8,17 +8,19 @@ BRAINROT = [
     "skibidi", "gyatt", "rizz", "sigma", "alpha", "beta", "omega", "grindset",
     "amogus", "sus", "imposter", "sussy", "impostor", "suspect", "amongus",
     "gooning", "goon", "gooner", "kpop", 
-    "boomer", "doomer", "zoomer",
+    "boomer", "doomer", "zoomer", "gloomer",
     "copium", "cope", "seethe", "mald", "cringe", "based", "redpilled",
     "bluepilled", "blackpilled", "blud", "dawg", "ishowspeed", "bussing", "poggers",
-    "glizzy", "thug", "slatt", "twin"
+    "glizzy", "thug", "slatt", "twin", "highkey", "lowkey", "bbc", "rawdogging"
 ]
 
 # Multi-word slang phrases
 BRAINROT_PHRASES = [
-    "top g", "omega male grindset", "shadow wizard money gang", "high key", "low key", "no cap",
-    "fanum tax", "kai cenat", "duke dennis", "adin ross", "andrew tate", "nickeh30", "ice spice", 
-    "grimace shake", "morbin time", "dj khaled", "sisyphus", "oceangate",
+    "top g", "omega male grindset", "high key", "low key", "no cap",
+    "fanum tax", "kai cenat", "duke dennis", "adin ross", "andrew tate", "nickeh30", "ice spice", "baby gronk", "dj khaled",
+    "grimace shake", "morbin time", "sussy baka", "anumaanam yadava",
+    "hawk tuah", "talk tuah", "crash out", "crashing out", "subway surfers", "when the impostor is sus",
+    "type shit", "type shi", "raw dogging"
 ]
 
 # Multi-word meme phrases
@@ -34,7 +36,8 @@ MEME_PHRASES = [
     "ugandan knuckles", "social credit", "better caul saul", "freddy fazbear",
     "literally hitting the griddy", "john pork", "all my fellas", "fr we go gym",
     "goated with the sauce", "kiki do you love me", "hit or miss", "zesty ahh", "touch grass",
-    "monkeypox"
+    "monkeypox", "big chungus", "oceangate", "lebron james", "he got that dawg in him",
+    "spit on that thang", "i am speed"
 ]
 
 EMOJI_WEIGHTS = {
@@ -106,7 +109,7 @@ def refined_brainrot_score(text):
 
 if __name__ == "__main__":
     # Test Texts
-    text1 = "top g comment team on the high key this a tuff comment no cap. Skibidi bop bop bop!"
+    text1 = "top g comment team on the high key this a tuff comment no cap. Skibidi bop bop bop! sin city chill guy top g"
     text2 = "The quick brown fox jumps over the lazy dog multiple times, seeking adventure and excitement in a world filled with endless possibilities, where dreams are born, and limits are shattered. The fox encounters new challenges, faces obstacles, and learns valuable lessons about perseverance and courage. Along the way, the fox befriends a curious rabbit, a wise owl, and a playful squirrel, forming a team of unlikely adventurers who explore the mysteries of the forest together. Each step brings new discoveries, laughter, and moments of triumph. As the days turn to nights and seasons change, the fox grows stronger and wiser, cherishing the bonds formed and the experiences gained. The forest becomes a symbol of growth, a place where dreams flourish, and where the spirit of adventure never fades. This is the tale of a fox, a story of courage, friendship, and the beauty of a journey that lasts a lifetime, inspiring others to chase their own dreams and embrace the adventures that await."
     
     # Calculate scores
