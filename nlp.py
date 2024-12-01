@@ -136,6 +136,7 @@ def suggest_brainrotted_text(text, current_score):
 
     **Instructions:**
     - Focus only on suggestions and roasting the user for low brainrot scores.
+    - For the suggestions, please throughouhly analyze, you are NOT restricted to 3 suggestions. I would say maximum 6 suggestions, but make them good suggestions and be funny with the suggestions. Ensure there is a lot of brainrot within the suggestions.
     - Do NOT include rewritten text. Only provide suggestions and roast the user.
     - Ensure the JSON format is consistent and follows the example provided above.
     """
