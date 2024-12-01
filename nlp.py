@@ -122,11 +122,9 @@ def suggest_brainrotted_text(text, current_score):
     Your output should strictly follow this JSON format:
     {{
         "score": {current_score},
-        "suggestions": [
-            {{"suggestion1": "Add more slang words like 'sigma' and 'gyatt' to the text."}},
-            {{"suggestion2": "Include more emojis such as '💀' and '🤯'."}},
-            {{"suggestion3": "Incorporate chaotic meme phrases like 'Whopper Whopper Whopper'."}}
-        ],
+        {{"suggestion1": "Replace generic expressions with chaotic meme-energy phrases like 'ratio'd into oblivion by a sentient croissant' or 'skibbity bop-bop yes yes slay'."}},
+        {{"suggestion2": "Spam more absurd Gen Z slang such as 'glizzy goblin vibes frfr', 'rizz overload 💅', or 'built like a capybara in Nikes'."}},
+        {{"suggestion3": "Infuse hyper-random internet humor by mentioning surreal scenarios, e.g., 'the Ohio Final Boss just stole my baguette' or 'Elon Musk is now a Minecraft villager 🚀.'"}},
         "roast": "Bro, your text is so boring it's giving boomer bedtime story vibes. Add some spice, no cap. 💀"
     }}
 
