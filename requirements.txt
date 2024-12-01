@@ -1,0 +1,9 @@
+flask
+flask-cors
+werkzeug
+PyPDF2
+python-docx
+spacy
+emoji
+openai
+python-dotenv
