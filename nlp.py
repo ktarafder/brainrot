@@ -114,53 +114,48 @@ def suggest_brainrotted_text(text, current_score):
     load_dotenv()
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        return ["Please set the OPENAI_API_KEY in your environment."]
+        return {"error": "Please set the OPENAI_API_KEY in your environment."}
     client = OpenAI(api_key=api_key)
+    
     prompt = f"""
     You are an expert in analyzing and improving "brainrot" text scores based on a scoring algorithm. 
-    Here is how the brainrot score works:
-
-    **Brainrot Scoring System:**
-    1. **Slang Density:** The use of specific slang words contributes the most to the score. Examples of slang: "skibidi," "rizz," "no cap," "based," "sigma," "gyatt."
-    2. **Emoji Usage:** Emojis like "💀," "🤯," and "🥵" increase the score. Their impact is weighted based on their relevance to the slang or meme context.
-    3. **Meme Phrases:** Recognizable meme phrases like "the ocky way," "whopper whopper whopper whopper," and "morbin time" boost the score.
-    4. **Sentence Chaos:** Chaotic sentence structures with varying lengths and a mix of slang, memes, and emojis increase the score slightly.
-
-    **Brainrot Words and Phrases:** 
-    Single-word slang: {BRAINROT}
-    Multi-word slang phrases: {BRAINROT_PHRASES}
-    
-    **Meme Phrases:**
-    Meme phrases: {MEME_PHRASES}
+    Your output should strictly follow this JSON format:
+    {{
+        "score": {current_score},
+        "suggestions": [
+            {{"suggestion1": "Add more slang words like 'sigma' and 'gyatt' to the text."}},
+            {{"suggestion2": "Include more emojis such as '💀' and '🤯'."}},
+            {{"suggestion3": "Incorporate chaotic meme phrases like 'Whopper Whopper Whopper'."}}
+        ],
+        "roast": "Bro, your text is so boring it's giving boomer bedtime story vibes. Add some spice, no cap. 💀"
+    }}
 
     **User Input:**
     - Current Brainrot Score: {current_score}
     - Text to Improve: "{text}"
 
-    **Your Task:**
-    Based on the scoring system, provide suggestions to increase the brainrot score of the text. 
-    Suggestions should:
-    - Add relevant slang, meme phrases, and emojis to the text.
-    - Suggest edits to increase sentence chaos without losing coherence.
-    - Indicate which edits will have the biggest impact on the brainrot score.
-    - Be concise and list out the suggestions, rather than rewriting the text entirely.
-
-    Please return the suggestions in a list while also roasting the user for not being brainrotted enough in a brainrot manner.
-
-    After giving the user suggestions, implement the suggestions to generate new text.
+    **Instructions:**
+    - Focus only on suggestions and roasting the user for low brainrot scores.
+    - Do NOT include rewritten text. Only provide suggestions and roast the user.
+    - Ensure the JSON format is consistent and follows the example provided above.
     """
     try:
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o-mini",
             messages=[{"role": "system", "content": prompt}],
             temperature=0.7,
-            max_tokens=500,
+            max_tokens=2000,
         )
-        suggestions_content = response.choices[0].message.content  
-        suggestions = suggestions_content.split("\n") if isinstance(suggestions_content, str) else []
-        return suggestions
+        content = response.choices[0].message.content.strip()
+        # Validate JSON format
+        try:
+            formatted_response = eval(content)  # Convert string to dictionary
+            return formatted_response
+        except Exception as e:
+            return {"error": f"Invalid JSON format from OpenAI: {e}"}
     except Exception as e:
-        return [f"Error generating suggestions: {str(e)}"]
+        return {"error": f"Error generating suggestions: {str(e)}"}
+
 
 if __name__ == "__main__":
     # Test Texts

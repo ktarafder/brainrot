@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
 import PyPDF2
@@ -6,6 +7,7 @@ from docx import Document
 from nlp import refined_brainrot_score, suggest_brainrotted_text
 
 app = Flask(__name__)
+CORS(app)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'docx'}
 
@@ -54,15 +56,9 @@ def upload_file():
 
         brainrot_score = refined_brainrot_score(text)
         suggestions = suggest_brainrotted_text(text, brainrot_score)
-        if isinstance(suggestions, list):
-            suggestions = [str(s) for s in suggestions]
-        else:
-            suggestions = [str(suggestions)]
+        suggestions["score"] = round(brainrot_score, 2)
 
-        return jsonify({
-            "score": round(brainrot_score, 2),
-            "suggestions": suggestions
-        }), 200
+        return jsonify(suggestions), 200
     
     return jsonify({"error": "Invalid file format"}), 400
 
