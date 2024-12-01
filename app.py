@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template
 import os
 from werkzeug.utils import secure_filename
 import PyPDF2
@@ -87,31 +87,46 @@ def brainrot_score(text):
     score = (slang_score * 0.4) + (emoji_score * 0.2) + (meme_score * 0.2) + (chaos_score * 0.2)
     return min(score * 100, 100)
 
-@app.route('/upload', methods=['POST'])
+# Flask Routes
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file uploaded'}), 400
-    
-    file = request.files['file']
-    if not allowed_file(file.filename):
-        return jsonify({'error': 'Invalid file format. Only PDF and DOCX are supported.'}), 400
-    
-    filename = secure_filename(file.filename)
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(file_path)
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
 
-    # Parse the file based on its type
-    file_type = filename.rsplit('.', 1)[1].lower()
-    if file_type == 'pdf':
-        text = parse_pdf(file_path)
-    elif file_type == 'docx':
-        text = parse_word(file_path)
-    else:
-        return jsonify({'error': 'Unsupported file type.'}), 400
+            # Parse the file based on its type
+            file_type = filename.rsplit('.', 1)[1].lower()
+            if file_type == 'pdf':
+                text = parse_pdf(file_path)
+            elif file_type == 'docx':
+                text = parse_word(file_path)
+            else:
+                return "Unsupported file type."
 
-    # Calculate bot scorerainr
-    score = brainrot_score(text)
-    return jsonify({'brainrot_score': score})
+            # Calculate brainrot score
+            score = brainrot_score(text)
+
+            return f"""
+            <!doctype html>
+            <title>Brainrot Score</title>
+            <h1>Brainrot Score: {score:.2f}</h1>
+            <a href="/">Upload another file</a>
+            """
+        else:
+            return "Invalid file format. Only PDF and DOCX are supported."
+
+    return '''
+    <!doctype html>
+    <title>Brainrot Analyzer</title>
+    <h1>Upload PDF or DOCX File</h1>
+    <form method=post enctype=multipart/form-data>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+    '''
 
 if __name__ == '__main__':
     app.run(debug=True)
