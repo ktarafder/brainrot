@@ -7,3 +7,4 @@ spacy
 emoji
 openai
 python-dotenv
+gunicorn
